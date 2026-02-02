@@ -1,7 +1,5 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home1/abdonc73/iagus.com.br/
-    - /bin/cp -R * $DEPLOYPATH
-    - /bin/cp .env.example $DEPLOYPATH/.env
-    - /bin/cp .htaccess $DEPLOYPATH/public/.htaccess
+    - export DEPLOYPATH=/home1/abdonc73/iagus.com.br
+    - /bin/cp -R . $DEPLOYPATH

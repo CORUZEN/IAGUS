@@ -13,26 +13,14 @@ jobs:
     - name: 🚚 Checkout code
       uses: actions/checkout@v3
       
-    - name: 📂 Sync files via FTP
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+    - name: 📂 Deploy via SFTP
+      uses: wlixcc/SFTP-Deploy-Action@v1.2.4
       with:
-        server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
+        server: ${{ secrets.FTP_SERVER }}
         password: ${{ secrets.FTP_PASSWORD }}
-        port: 21
-        protocol: ftp
-        server-dir: /
-        timeout: 600000
-        exclude: |
-          **/.git*
-          **/.git*/**
-          **/node_modules/**
-          **/vendor/**
-          **/.env
-          **/storage/logs/**
-          **/storage/framework/cache/**
-          **/storage/framework/sessions/**
-          **/storage/framework/views/**
-          **/*.md
-          **/tests/**
-          **/.vscode/**
+        port: 22
+        local_path: './*'
+        remote_path: '/iagus.com.br'
+        sftp_only: true
+        args: '-o ConnectTimeout=5'
