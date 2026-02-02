@@ -19,7 +19,10 @@ jobs:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: /iagus.com.br/
+        port: 21
+        protocol: ftp
+        server-dir: /
+        timeout: 600000
         exclude: |
           **/.git*
           **/.git*/**
