@@ -39,7 +39,7 @@
                             id="title" 
                             name="title" 
                             value="{{ old('title', $event->title) }}"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent @error('title') border-red-500 @enderror"
+                            class="input @error('title') !border-red-500 @enderror"
                             required
                         >
                         @error('title')
@@ -57,7 +57,7 @@
                             id="slug" 
                             name="slug" 
                             value="{{ old('slug', $event->slug) }}"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent @error('slug') border-red-500 @enderror"
+                            class="input @error('slug') !border-red-500 @enderror"
                             placeholder="retiro-de-carnaval-2026"
                         >
                         @error('slug')
@@ -75,7 +75,7 @@
                             id="description" 
                             name="description" 
                             rows="6"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent @error('description') border-red-500 @enderror"
+                            class="input @error('description') !border-red-500 @enderror"
                             required
                         >{{ old('description', $event->description) }}</textarea>
                         @error('description')
@@ -134,7 +134,7 @@
                             id="start_at" 
                             name="start_at" 
                             value="{{ old('start_at', $event->start_at->format('Y-m-d\TH:i')) }}"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent @error('start_at') border-red-500 @enderror"
+                            class="input @error('start_at') !border-red-500 @enderror"
                             required
                         >
                         @error('start_at')
@@ -166,7 +166,7 @@
                             id="location_name" 
                             name="location_name" 
                             value="{{ old('location_name', $event->location_name) }}"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent @error('location_name') border-red-500 @enderror"
+                            class="input @error('location_name') !border-red-500 @enderror"
                             placeholder="Sítio Esperança"
                             required
                         >
@@ -231,7 +231,7 @@
                             name="price_cents" 
                             value="{{ old('price_cents', $event->price_cents) }}"
                             min="0"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent @error('price_cents') border-red-500 @enderror"
+                            class="input @error('price_cents') !border-red-500 @enderror"
                             required
                         >
                         @error('price_cents')
@@ -283,7 +283,7 @@
                     <select 
                         id="status" 
                         name="status" 
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent @error('status') border-red-500 @enderror"
+                        class="input @error('status') !border-red-500 @enderror"
                         required
                     >
                         <option value="draft" {{ old('status', $event->status) === 'draft' ? 'selected' : '' }}>Rascunho</option>
