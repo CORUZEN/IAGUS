@@ -52,10 +52,10 @@ Write-Host ""
 
 # Matar processos nas portas
 Write-Host "Verificando portas..." -ForegroundColor Yellow
-$port8000 = Get-NetTCPConnection -LocalPort 8000 -ErrorAction SilentlyContinue
-if ($port8000) {
-    Write-Host "  Encerrando processo na porta 8000..." -ForegroundColor Yellow
-    Stop-Process -Id $port8000.OwningProcess -Force -ErrorAction SilentlyContinue
+$port3001 = Get-NetTCPConnection -LocalPort 3001 -ErrorAction SilentlyContinue
+if ($port3001) {
+    Write-Host "  Encerrando processo na porta 3001..." -ForegroundColor Yellow
+    Stop-Process -Id $port3001.OwningProcess -Force -ErrorAction SilentlyContinue
 }
 
 $port5173 = Get-NetTCPConnection -LocalPort 5173 -ErrorAction SilentlyContinue
@@ -124,5 +124,5 @@ Write-Host "Pressione Ctrl+C para parar o servidor" -ForegroundColor Yellow
 Write-Host "==========================================" -ForegroundColor Cyan
 Write-Host ""
 
-# Iniciar Laravel
-& $phpCmd artisan serve
+# Iniciar Laravel na porta 3001
+& $phpCmd artisan serve --port=3001

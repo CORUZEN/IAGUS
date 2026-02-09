@@ -4,6 +4,96 @@ Histórico de mudanças, correções e melhorias do projeto.
 
 ---
 
+## [Fevereiro 09, 2026] - Porta 3001 e Scripts Finalizados
+
+### 🔧 Configuração de Porta Atualizada
+
+#### ✅ Porta do Servidor Alterada: 8000 → 3001
+**Mudança:** Laravel agora inicia na porta 3001  
+**Motivo:** Evitar conflitos com outros serviços na porta 8000  
+**Arquivos Atualizados:**
+- `start-powershell.ps1` - Script PowerShell
+- `start.sh` - Script Bash
+- `start.bat` - Script Windows Batch
+- `herd-start.sh` - Script Laravel Herd
+- `COMO_INICIAR.md` - Documentação
+
+**Novo Acesso:**
+```
+http://localhost:3001  ← Nova porta
+http://localhost:5173  ← Vite HMR (sem mudanças)
+```
+
+**Comando para iniciar:**
+```bash
+php artisan serve --port=3001
+```
+
+### 📚 Documentação Finalizada
+
+#### ✅ Copilot Instructions Atualizado
+**Arquivo:** `.github/copilot-instructions.md`  
+**Mudanças:**
+- Todos os itens de progresso marcados como concluídos ✅
+- Seção "Latest Updates" adicionada
+- Documentação de porta 3001
+- Lista completa de features implementadas
+- Scripts atualizados documentados
+
+**Status do Projeto:** 100% Completo e Documentado
+
+---
+
+## [Fevereiro 09, 2026] - Melhorias nos Scripts de Inicialização
+
+### 🚀 Scripts de Inicialização Otimizados
+
+#### ✅ Novo: COMO_INICIAR.md
+**Criado:** Guia completo sobre todos os métodos de inicialização  
+**Conteúdo:** 
+- Comparação de métodos (Windows, Linux, Mac, Docker)
+- Instruções específicas para cada plataforma
+- Troubleshooting de problemas comuns
+- Tabela de decisão: qual método usar quando
+
+#### ✅ Melhorado: start.sh
+**Mudanças:**
+- Detecta Laravel Herd automaticamente nos caminhos do Windows
+- Sugere usar `start.bat` quando executado no Git Bash (Windows)
+- Prioriza Herd sobre outras instalações PHP
+- Mensagens de erro mais claras com links diretos
+
+```bash
+# Novos caminhos detectados (prioridade)
+/c/Users/$USERNAME/.config/herd/bin/php.exe
+/c/Users/$USERNAME/AppData/Local/Herd/bin/php.exe
+```
+
+#### ✅ Novo: herd-start.sh
+**Criado:** Script otimizado especificamente para Laravel Herd  
+**Funcionalidades:**
+- Assume Herd já instalado
+- Usa `herd link` para criar URL bonita
+- Mais simples e direto que `start.sh`
+
+#### ✅ Atualizado: README.md
+**Mudanças:**
+- Seção "⚡ Mais Fácil (Windows)" adicionada
+- Link para COMO_INICIAR.md em destaque
+- Instruções claras para `start.bat` e PowerShell
+
+**Impacto:**  
+✅ Usuários Windows podem iniciar com um clique  
+✅ Git Bash detecta situação e recomenda melhor método  
+✅ Documentação completa para todas as plataformas  
+
+**Aprendizado:**  
+- Git Bash no Windows não vê PHP do Herd no PATH facilmente
+- Scripts `.bat` e `.ps1` funcionam melhor no Windows
+- Importante ter múltiplos métodos de inicialização documentados
+
+---
+
 ## [Fevereiro 2026] - Correções Críticas e Otimizações
 
 ### 🔧 Correções Críticas

@@ -36,7 +36,7 @@ php artisan migrate:fresh --seed
 # 5. Acessar site
 # http://webcoder.test  (via Herd)
 # ou
-# http://localhost:8000  (via artisan serve)
+# http://localhost:3001  (via artisan serve)
 ```
 
 ### Servidor Via Herd

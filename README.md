@@ -10,6 +10,22 @@
 
 ## 🚀 Início Rápido
 
+### ⚡ Mais Fácil (Windows)
+
+```bash
+# Clique duas vezes ou execute:
+start.bat
+```
+
+**OU** execute no terminal (Git Bash/PowerShell):
+```bash
+powershell -ExecutionPolicy Bypass -File start-powershell.ps1
+```
+
+📖 **[COMO_INICIAR.md](COMO_INICIAR.md)** - Todos os métodos de inicialização
+
+---
+
 ### Desenvolvedor Experiente? 
 👉 **[QUICK_START.md](QUICK_START.md)** - Setup em 60 segundos
 
@@ -39,8 +55,9 @@ Ver instruções completas: **[INSTRUCOES_INICIAR.md](INSTRUCOES_INICIAR.md)**
 
 ### 🎯 Início Rápido
 - ⚡ **[QUICK_START.md](QUICK_START.md)** - Setup em 60 segundos (dev experiente)
-- 🚀 **[INSTRUCOES_INICIAR.md](INSTRUCOES_INICIAR.md)** - Como iniciar servidor
-- 📖 **[START_HERE.md](START_HERE.md)** - Guia passo a passo detalhado
+- 🚀 **[COMO_INICIAR.md](COMO_INICIAR.md)** - Como executar os scripts de inicialização
+- 📖 **[INSTRUCOES_INICIAR.md](INSTRUCOES_INICIAR.md)** - Guia completo (Laravel Herd, alternatives, etc)
+- 📘 **[START_HERE.md](START_HERE.md)** - Passo a passo detalhado
 
 ### 🔧 Configuração e Instalação
 - 🗄️ **[DATABASE_SETUP.md](DATABASE_SETUP.md)** - Configuração do banco de dados

@@ -14,9 +14,9 @@ if errorlevel 1 (
     pause >nul
 )
 
-REM Verificar e matar processos na porta 8000 (Laravel)
-echo 📡 Verificando porta 8000...
-for /f "tokens=5" %%a in ('netstat -ano ^| findstr :8000') do (
+REM Verificar e matar processos na porta 3001 (Laravel)
+echo 📡 Verificando porta 3001...
+for /f "tokens=5" %%a in ('netstat -ano ^| findstr :3001') do (
     echo Encerrando processo %%a...
     taskkill /F /PID %%a >nul 2>&1
 )

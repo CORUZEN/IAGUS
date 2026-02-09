@@ -12,6 +12,29 @@ RED='\033[0;31m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
+# Se estiver no Windows (Git Bash), recomendar usar start.bat
+if [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "win32" ]]; then
+    echo -e "${YELLOW}⚠️  Você está no Git Bash no Windows${NC}"
+    echo ""
+    echo -e "${BLUE}💡 RECOMENDAÇÃO: Use o script nativo do Windows${NC}"
+    echo ""
+    echo -e "   Execute: ${GREEN}start.bat${NC} (clique duplo ou via CMD/PowerShell)"
+    echo ""
+    echo -e "${YELLOW}O start.bat funciona melhor no Windows porque:${NC}"
+    echo "   ✓ Detecta Laravel Herd automaticamente"
+    echo "   ✓ Gerencia portas corretamente"
+    echo "   ✓ Integra melhor com o sistema"
+    echo ""
+    read -p "Deseja continuar mesmo assim com o Git Bash? (s/N): " -n 1 -r
+    echo ""
+    if [[ ! $REPLY =~ ^[Ss]$ ]]; then
+        echo -e "${BLUE}Execute ${GREEN}start.bat${NC} ou ${GREEN}./start-powershell.ps1${NC}"
+        echo ""
+        exit 0
+    fi
+    echo ""
+fi
+
 # Verificar se Docker está disponível
 if command -v docker &> /dev/null && command -v docker-compose &> /dev/null; then
     echo -e "${BLUE}🐳 Docker detectado! Iniciando com Docker...${NC}"
@@ -61,17 +84,27 @@ PHP_CMD="php"
 if [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "win32" ]]; then
     echo -e "${YELLOW}🔍 Detectando PHP no Windows...${NC}"
     
-    # Tentar encontrar PHP usando o comando Windows
+    # Tentar encontrar PHP usando o comando Windows (PATH do sistema)
     PHP_PATH=$(cmd.exe //c "where php.exe 2>nul" | head -1 | tr -d '\r')
     
     if [ -z "$PHP_PATH" ]; then
-        # Procurar em locais comuns
+        # Procurar em locais comuns (incluindo Laravel Herd)
+        USERNAME=$(cmd.exe //c "echo %USERNAME%" | tr -d '\r')
+        
         COMMON_PATHS=(
+            # Laravel Herd (PRIORIDADE - instalação mais comum)
+            "/c/Users/$USERNAME/.config/herd/bin/php.exe"
+            "/c/Users/$USERNAME/AppData/Local/Herd/bin/php.exe"
+            # Laragon
+            "/c/laragon/bin/php/php-8.4.0/php.exe"
             "/c/laragon/bin/php/php-8.3.0/php.exe"
             "/c/laragon/bin/php/php-8.2.12/php.exe"
             "/c/laragon/bin/php/php-8.2.0/php.exe"
             "/c/laragon/bin/php/php-8.1.0/php.exe"
+            # XAMPP
             "/c/xampp/php/php.exe"
+            # WAMP
+            "/c/wamp64/bin/php/php8.4.0/php.exe"
             "/c/wamp64/bin/php/php8.3.0/php.exe"
             "/c/wamp64/bin/php/php8.2.0/php.exe"
             "/c/wamp/bin/php/php8.2.0/php.exe"
@@ -87,19 +120,21 @@ if [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "win32" ]]; then
     
     if [ ! -z "$PHP_PATH" ]; then
         PHP_CMD="$PHP_PATH"
+        PHP_VERSION=$("$PHP_CMD" -v | head -1)
         echo -e "${GREEN}✓ PHP encontrado: $PHP_PATH${NC}"
+        echo -e "${GREEN}  $PHP_VERSION${NC}"
     else
         echo -e "${RED}✗ PHP não encontrado!${NC}"
         echo ""
-        echo -e "${BLUE}💡 SOLUÇÃO MAIS FÁCIL: Use Docker!${NC}"
+        echo -e "${BLUE}💡 SOLUÇÃO RECOMENDADA: Laravel Herd${NC}"
         echo ""
-        echo "1. Instale Docker Desktop:"
-        echo "   https://www.docker.com/products/docker-desktop"
+        echo "1. Instale Laravel Herd (inclui PHP, Composer, MySQL e Nginx):"
+        echo "   ${GREEN}https://herd.laravel.com/windows${NC}"
         echo ""
-        echo "2. Execute este script novamente"
+        echo "2. Após instalar, reabra o terminal e execute novamente"
         echo ""
-        echo -e "${YELLOW}Ou instale PHP manualmente:${NC}"
-        echo "  - Laravel Herd: https://herd.laravel.com/windows"
+        echo -e "${YELLOW}Alternativas:${NC}"
+        echo "  - Docker Desktop: https://www.docker.com/products/docker-desktop"
         echo "  - Laragon: https://laragon.org/download/"
         echo ""
         exit 1
@@ -140,9 +175,9 @@ kill_port() {
     fi
 }
 
-# Verificar e matar processos nas portas 8000 (Laravel) e 5173 (Vite)
+# Verificar e matar processos nas portas 3001 (Laravel) e 5173 (Vite)
 echo -e "${YELLOW}📡 Verificando portas em uso...${NC}"
-kill_port 8000
+kill_port 3001
 kill_port 5173
 
 echo ""
@@ -215,7 +250,7 @@ echo "=========================================="
 echo -e "${GREEN}✅ SERVIDOR PRONTO!${NC}"
 echo "=========================================="
 echo ""
-echo -e "📱 Aplicação: ${GREEN}http://localhost:8000${NC}"
+echo -e "📱 Aplicação: ${GREEN}http://localhost:3001${NC}"
 echo -e "🎨 Vite HMR:  ${GREEN}http://localhost:5173${NC}"
 echo ""
 echo -e "👤 Admin: ${YELLOW}admin@iagus.org.br${NC} / ${YELLOW}iagus2026${NC}"
@@ -226,8 +261,8 @@ echo -e "${YELLOW}Pressione Ctrl+C para parar o servidor${NC}"
 echo "=========================================="
 echo ""
 
-# Iniciar Laravel (este fica em foreground)
-"$PHP_CMD" artisan serve
+# Iniciar Laravel na porta 3001 (este fica em foreground)
+"$PHP_CMD" artisan serve --port=3001
 
 # Quando Laravel é encerrado, matar o Vite também
 kill $VITE_PID 2>/dev/null

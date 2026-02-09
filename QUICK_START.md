@@ -39,7 +39,7 @@ php artisan migrate:fresh --seed
 
 ```bash
 # Servidor
-php artisan serve              # localhost:8000
+php artisan serve --port=3001  # localhost:3001
 herd link webcoder             # webcoder.test
 
 # Assets
