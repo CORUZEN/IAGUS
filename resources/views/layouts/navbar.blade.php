@@ -3,29 +3,29 @@
         <div class="flex justify-between items-center h-16">
             <!-- Logo -->
             <div class="flex-shrink-0">
-                <a href="#inicio" class="text-2xl font-bold text-primary-600 hover:text-primary-700 transition-colors">
+                <a href="{{ url('/') }}" class="text-2xl font-bold text-primary-600 hover:text-primary-700 transition-colors">
                     IAGUS
                 </a>
             </div>
             
             <!-- Desktop Menu -->
             <div class="hidden md:flex space-x-1">
-                <a href="#inicio" class="nav-link px-4 py-2 rounded-lg text-gray-700 hover:text-primary-600 hover:bg-primary-50 transition-all duration-200 {{ request()->routeIs('home') && !request()->getQueryString() ? 'text-primary-600 font-semibold bg-primary-50' : '' }}">
+                <a href="{{ url('/#inicio') }}" class="nav-link px-4 py-2 rounded-lg text-gray-700 hover:text-primary-600 hover:bg-primary-50 transition-all duration-200 {{ request()->routeIs('home') ? 'text-primary-600 font-semibold bg-primary-50' : '' }}">
                     Início
                 </a>
-                <a href="#conheca" class="nav-link px-4 py-2 rounded-lg text-gray-700 hover:text-primary-600 hover:bg-primary-50 transition-all duration-200">
+                <a href="{{ url('/#conheca') }}" class="nav-link px-4 py-2 rounded-lg text-gray-700 hover:text-primary-600 hover:bg-primary-50 transition-all duration-200">
                     Conheça
                 </a>
-                <a href="#cultos" class="nav-link px-4 py-2 rounded-lg text-gray-700 hover:text-primary-600 hover:bg-primary-50 transition-all duration-200">
+                <a href="{{ url('/#cultos') }}" class="nav-link px-4 py-2 rounded-lg text-gray-700 hover:text-primary-600 hover:bg-primary-50 transition-all duration-200">
                     Cultos
                 </a>
-                <a href="#eventos" class="nav-link px-4 py-2 rounded-lg text-gray-700 hover:text-primary-600 hover:bg-primary-50 transition-all duration-200 {{ request()->routeIs('events.*') ? 'text-primary-600 font-semibold bg-primary-50' : '' }}">
+                <a href="{{ url('/#eventos') }}" class="nav-link px-4 py-2 rounded-lg text-gray-700 hover:text-primary-600 hover:bg-primary-50 transition-all duration-200">
                     Eventos
                 </a>
-                <a href="#juventude" class="nav-link px-4 py-2 rounded-lg text-gray-700 hover:text-primary-600 hover:bg-primary-50 transition-all duration-200">
+                <a href="{{ url('/#juventude') }}" class="nav-link px-4 py-2 rounded-lg text-gray-700 hover:text-primary-600 hover:bg-primary-50 transition-all duration-200">
                     Juventude
                 </a>
-                <a href="#contato" class="nav-link px-4 py-2 rounded-lg text-gray-700 hover:text-primary-600 hover:bg-primary-50 transition-all duration-200">
+                <a href="{{ url('/#contato') }}" class="nav-link px-4 py-2 rounded-lg text-gray-700 hover:text-primary-600 hover:bg-primary-50 transition-all duration-200">
                     Contato
                 </a>
             </div>
@@ -105,22 +105,22 @@
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100">
         <div class="px-4 py-3 space-y-1">
-            <a href="#inicio" class="block px-4 py-3 rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-600 transition-colors font-medium">
+            <a href="{{ url('/#inicio') }}" class="block px-4 py-3 rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-600 transition-colors font-medium">
                 Início
             </a>
-            <a href="#conheca" class="block px-4 py-3 rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-600 transition-colors font-medium">
+            <a href="{{ url('/#conheca') }}" class="block px-4 py-3 rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-600 transition-colors font-medium">
                 Conheça
             </a>
-            <a href="#cultos" class="block px-4 py-3 rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-600 transition-colors font-medium">
+            <a href="{{ url('/#cultos') }}" class="block px-4 py-3 rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-600 transition-colors font-medium">
                 Cultos
             </a>
-            <a href="#eventos" class="block px-4 py-3 rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-600 transition-colors font-medium">
+            <a href="{{ url('/#eventos') }}" class="block px-4 py-3 rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-600 transition-colors font-medium">
                 Eventos
             </a>
-            <a href="#juventude" class="block px-4 py-3 rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-600 transition-colors font-medium">
+            <a href="{{ url('/#juventude') }}" class="block px-4 py-3 rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-600 transition-colors font-medium">
                 Juventude
             </a>
-            <a href="#contato" class="block px-4 py-3 rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-600 transition-colors font-medium">
+            <a href="{{ url('/#contato') }}" class="block px-4 py-3 rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-600 transition-colors font-medium">
                 Contato
             </a>
             

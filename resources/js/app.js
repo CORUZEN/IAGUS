@@ -1,12 +1,11 @@
 import './bootstrap';
 
 // ===== CUSTOM SMOOTH SCROLL FUNCTION =====
-function smoothScrollTo(targetPosition, duration = 800) {
+function smoothScrollTo(targetPosition, duration = 700) {
     const startPosition = window.pageYOffset;
     const distance = targetPosition - startPosition;
     let startTime = null;
     
-    // Easing function - easeInOutCubic
     function easeInOutCubic(t) {
         return t < 0.5 
             ? 4 * t * t * t 
@@ -29,45 +28,65 @@ function smoothScrollTo(targetPosition, duration = 800) {
     requestAnimationFrame(animation);
 }
 
-// ===== SMOOTH SCROLL FOR ALL ANCHOR LINKS =====
-function initSmoothScroll() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        // Remove listeners antigos primeiro (se houver)
-        anchor.removeEventListener('click', handleAnchorClick);
-        // Adiciona novo listener
-        anchor.addEventListener('click', handleAnchorClick);
+// ===== HANDLE ANCHOR LINKS =====
+function initAnchorLinks() {
+    document.querySelectorAll('a[href*="#"]').forEach(link => {
+        link.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            
+            // Se o link começa com /# (ex: /#inicio), é navegação para home
+            // Deixa o navegador navegar normalmente
+            if (href.startsWith('/#')) {
+                return true; // Navegação normal
+            }
+            
+            // Se é apenas #algo (mesma página)
+            const hashIndex = href.indexOf('#');
+            if (hashIndex === -1) return;
+            
+            const targetId = href.substring(hashIndex);
+            const targetElement = document.querySelector(targetId);
+            
+            // Se o elemento existe na página atual, faz scroll suave
+            if (targetElement) {
+                e.preventDefault();
+                
+                const navbar = document.getElementById('navbar');
+                const navbarHeight = navbar ? navbar.offsetHeight : 80;
+                const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+                
+                smoothScrollTo(targetPosition, 700);
+                
+                // Fecha menu mobile
+                const mobileMenu = document.getElementById('mobile-menu');
+                if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                    const menuIcon = document.getElementById('menu-icon');
+                    const closeIcon = document.getElementById('close-icon');
+                    if (menuIcon) menuIcon.classList.remove('hidden');
+                    if (closeIcon) closeIcon.classList.add('hidden');
+                }
+            }
+            // Se não existe, deixa o navegador navegar
+        });
     });
 }
 
-function handleAnchorClick(e) {
-    const targetId = this.getAttribute('href');
+// ===== HANDLE SCROLL ON PAGE LOAD (when URL has hash) =====
+function handleInitialScroll() {
+    const hash = window.location.hash;
+    if (!hash) return;
     
-    // Só processa se o target existir na página
-    const targetElement = document.querySelector(targetId);
-    if (targetElement) {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        const navbar = document.getElementById('navbar');
-        const navbarHeight = navbar ? navbar.offsetHeight : 80;
-        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
-        
-        // Usa animação customizada suave
-        smoothScrollTo(targetPosition, 800);
-        
-        // Fecha menu mobile se estiver aberto
-        const mobileMenu = document.getElementById('mobile-menu');
-        if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
-            mobileMenu.classList.add('hidden');
-            const menuIcon = document.getElementById('menu-icon');
-            const closeIcon = document.getElementById('close-icon');
-            if (menuIcon) menuIcon.classList.remove('hidden');
-            if (closeIcon) closeIcon.classList.add('hidden');
+    // Aguarda para garantir que tudo carregou
+    setTimeout(() => {
+        const targetElement = document.querySelector(hash);
+        if (targetElement) {
+            const navbar = document.getElementById('navbar');
+            const navbarHeight = navbar ? navbar.offsetHeight : 80;
+            const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+            smoothScrollTo(targetPosition, 700);
         }
-        
-        // Atualiza URL sem recarregar
-        history.pushState(null, null, targetId);
-    }
+    }, 100);
 }
 
 // ===== AUTO-HIDE ALERTS =====
@@ -126,7 +145,8 @@ function initScrollSpy() {
                 navLinks.forEach(link => {
                     link.classList.remove('text-primary-600', 'font-semibold', 'bg-primary-50');
                     
-                    if (link.getAttribute('href') === `#${id}`) {
+                    const href = link.getAttribute('href') || '';
+                    if (href.includes(`#${id}`)) {
                         link.classList.add('text-primary-600', 'font-semibold', 'bg-primary-50');
                     }
                 });
@@ -183,13 +203,11 @@ window.copyToClipboard = function(text) {
     });
 };
 
-// ===== INITIALIZE ALL ON DOM READY =====
+// ===== INITIALIZE ALL =====
 document.addEventListener('DOMContentLoaded', () => {
-    initSmoothScroll();
+    handleInitialScroll();
+    initAnchorLinks();
     initAlerts();
     initScrollSpy();
     initNavbarScroll();
 });
-
-// Re-initialize smooth scroll after any content load
-window.reinitSmoothScroll = initSmoothScroll;
