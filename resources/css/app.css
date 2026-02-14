@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+    
     body {
         @apply bg-gray-50 text-gray-900;
     }
@@ -10,11 +14,11 @@
 
 @layer components {
     .btn {
-        @apply px-4 py-2 rounded-lg font-medium transition-colors duration-200;
+        @apply px-4 py-2 rounded-lg font-medium transition-all duration-200;
     }
     
     .btn-primary {
-        @apply bg-primary-600 text-white hover:bg-primary-700;
+        @apply bg-primary-600 text-white hover:bg-primary-700 hover:shadow-lg;
     }
     
     .btn-secondary {
@@ -81,5 +85,28 @@
     
     .badge-info {
         @apply bg-blue-100 text-blue-800;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+}
+
+/* Smooth scroll fallback for older browsers */
+@supports not (scroll-behavior: smooth) {
+    html {
+        scroll-behavior: auto;
     }
 }
