@@ -6,14 +6,39 @@
 
 <!-- Hero Section - Início -->
 <section id="inicio" class="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 text-white overflow-hidden">
-    <!-- Background Pattern -->
-    <div class="absolute inset-0 opacity-10">
-        <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
-                <circle cx="1" cy="1" r="0.5" fill="currentColor"/>
-            </pattern>
-            <rect width="100" height="100" fill="url(#grid)"/>
-        </svg>
+    <!-- Background - Animated Floating Particles (GPU Optimized) -->
+    <div class="absolute inset-0">
+        <!-- Floating particles container -->
+        <div class="particles-container absolute inset-0 overflow-hidden">
+            <!-- Particle 1 -->
+            <div class="particle" style="--x: 10%; --y: 20%; --size: 8px; --delay: 0s; --duration: 25s;"></div>
+            <!-- Particle 2 -->
+            <div class="particle" style="--x: 20%; --y: 60%; --size: 6px; --delay: 2s; --duration: 30s;"></div>
+            <!-- Particle 3 -->
+            <div class="particle" style="--x: 30%; --y: 40%; --size: 10px; --delay: 4s; --duration: 28s;"></div>
+            <!-- Particle 4 -->
+            <div class="particle" style="--x: 50%; --y: 10%; --size: 5px; --delay: 1s; --duration: 35s;"></div>
+            <!-- Particle 5 -->
+            <div class="particle" style="--x: 60%; --y: 70%; --size: 7px; --delay: 3s; --duration: 32s;"></div>
+            <!-- Particle 6 -->
+            <div class="particle" style="--x: 70%; --y: 30%; --size: 9px; --delay: 5s; --duration: 27s;"></div>
+            <!-- Particle 7 -->
+            <div class="particle" style="--x: 80%; --y: 50%; --size: 6px; --delay: 2.5s; --duration: 33s;"></div>
+            <!-- Particle 8 -->
+            <div class="particle" style="--x: 90%; --y: 80%; --size: 8px; --delay: 4.5s; --duration: 29s;"></div>
+            <!-- Particle 9 -->
+            <div class="particle" style="--x: 15%; --y: 85%; --size: 5px; --delay: 1.5s; --duration: 31s;"></div>
+            <!-- Particle 10 -->
+            <div class="particle" style="--x: 40%; --y: 25%; --size: 7px; --delay: 6s; --duration: 26s;"></div>
+            <!-- Particle 11 -->
+            <div class="particle" style="--x: 85%; --y: 15%; --size: 6px; --delay: 3.5s; --duration: 34s;"></div>
+            <!-- Particle 12 -->
+            <div class="particle" style="--x: 5%; --y: 45%; --size: 8px; --delay: 0.5s; --duration: 28s;"></div>
+        </div>
+        
+        <!-- Subtle gradient overlays -->
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(255,255,255,0.08),transparent)]"></div>
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_60%_60%_at_80%_80%,rgba(255,255,255,0.05),transparent)]"></div>
     </div>
     
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20">
