@@ -106,7 +106,7 @@ Write-Host "  SERVIDOR PRONTO!" -ForegroundColor Green
 Write-Host "==========================================" -ForegroundColor Cyan
 Write-Host ""
 Write-Host "Aplicacao: " -NoNewline
-Write-Host "http://localhost:8000" -ForegroundColor Yellow
+Write-Host "http://localhost:3001" -ForegroundColor Yellow
 Write-Host "Vite HMR:  " -NoNewline
 Write-Host "http://localhost:5173" -ForegroundColor Yellow
 Write-Host ""

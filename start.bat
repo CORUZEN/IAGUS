@@ -91,7 +91,7 @@ echo ==========================================
 echo ✅ SERVIDOR PRONTO!
 echo ==========================================
 echo.
-echo 📱 Aplicação: http://localhost:8000
+echo 📱 Aplicação: http://localhost:3001
 echo 🎨 Vite HMR:  http://localhost:5173
 echo.
 echo 👤 Admin: admin@iagus.org.br / iagus2026
@@ -102,5 +102,5 @@ echo Pressione Ctrl+C para parar o servidor
 echo ==========================================
 echo.
 
-REM Iniciar Laravel
-php artisan serve
+REM Iniciar Laravel na porta 3001
+php artisan serve --port=3001
