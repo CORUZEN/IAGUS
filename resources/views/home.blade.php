@@ -5,7 +5,7 @@
 @section('content')
 
 <!-- Hero Section - Início -->
-<section id="inicio" class="relative min-h-screen flex items-center justify-center bg-primary-700 text-white overflow-hidden">
+<section id="inicio" class="relative h-[calc(100dvh-64px)] min-h-[600px] flex items-center justify-center bg-primary-700 text-white overflow-hidden">
     <!-- Background - Elegant Aurora Effect -->
     <div class="absolute inset-0">
         <!-- Base gradient -->
@@ -28,7 +28,7 @@
         <div class="absolute bottom-1/4 right-1/6 w-80 h-80 bg-primary-500/15 rounded-full blur-3xl"></div>
     </div>
     
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20 flex flex-col justify-center min-h-screen">
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col justify-center h-full">
         <div class="animate-fade-in">
             <p class="text-lg md:text-xl mb-4 text-primary-100 tracking-wider uppercase">Bem-vindo à</p>
             <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
