@@ -7,7 +7,8 @@ deployment:
     # 2. Copiar todos os arquivos do repo para o DEPLOYPATH
     - /bin/cp -R . $DEPLOYPATH
 
-    # 3. Instalar dependências PHP (sem dev, otimizado)
+    # 3. Limpar vendor antigo e reinstalar dependências PHP
+    - rm -rf $DEPLOYPATH/vendor
     - cd $DEPLOYPATH && /usr/local/bin/php /usr/local/bin/composer install --no-dev --optimize-autoloader --no-interaction 2>&1
 
     # 4. Limpar caches antigos
