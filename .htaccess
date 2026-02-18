@@ -1,18 +1,14 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    # Redireciona todo o tráfego web para a pasta public/
+    # Redireciona todo o tráfego para a pasta public/
+    RewriteCond %{REQUEST_URI} !^/public/
     RewriteRule ^(.*)$ public/$1 [L]
 </IfModule>
 
-# Bloquear acesso direto a arquivos sensíveis
-<FilesMatch "\.(env|log|json|lock|gitignore|gitattributes|blade\.php|php)$">
+# Bloquear acesso a arquivos sensíveis na raiz
+<FilesMatch "\.(env|log|lock|gitignore|gitattributes)$">
     Order allow,deny
     Deny from all
 </FilesMatch>
-
-# Permitir acesso a index.php via redirecionamento interno
-<Files "index.php">
-    Order allow,deny
-    Allow from all
 </Files>

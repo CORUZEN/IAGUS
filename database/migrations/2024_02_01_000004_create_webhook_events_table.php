@@ -14,7 +14,7 @@ return new class extends Migration
             $table->string('event_type')->nullable();
             $table->string('request_id')->nullable()->comment('ID único da requisição');
             $table->timestamp('received_at')->useCurrent();
-            $table->longText('payload_json')->comment('Payload completo do webhook');
+            $table->json('payload_json')->comment('Payload completo do webhook');
             $table->timestamp('processed_at')->nullable();
             $table->enum('processing_status', ['received', 'processed', 'failed'])->default('received');
             $table->text('error_message')->nullable();

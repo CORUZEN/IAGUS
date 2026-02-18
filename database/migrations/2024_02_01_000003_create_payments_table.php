@@ -27,7 +27,7 @@ return new class extends Migration
                 'charged_back'  // Chargeback
             ])->default('created');
             $table->string('status_detail')->nullable();
-            $table->text('payload_json')->nullable()->comment('Dados completos para auditoria');
+            $table->json('payload_json')->nullable()->comment('Dados completos para auditoria');
             $table->timestamps();
             
             $table->index('mp_preference_id');
