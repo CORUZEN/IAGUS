@@ -42,7 +42,6 @@ jobs:
         sftp_only: true
         delete_remote_files: false
         args: '-o ConnectTimeout=30 -o StrictHostKeyChecking=no'
-        sftpargs: '--exclude=.git --exclude=node_modules --exclude=.env --exclude=storage/logs --exclude=storage/framework/cache --exclude=storage/framework/sessions --exclude=storage/framework/views'
 
     - name: 🚀 Pós-deploy via SSH (composer, migrate, optimize)
       uses: appleboy/ssh-action@v1.0.3
