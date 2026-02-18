@@ -30,8 +30,7 @@
     
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col justify-center h-full">
         <div class="animate-fade-in">
-            <p class="mb-3" style="font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(2rem, 5vw, 3rem); font-weight: 300; letter-spacing: 0.55em; color: rgba(255,255,255,0.92); line-height: 1; text-transform: uppercase;">IAGUS</p>
-            <div class="w-16 h-px bg-white/30 mx-auto mb-6"></div>
+            <p class="mb-6" style="font-family: 'Cinzel', serif; font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 400; letter-spacing: 0.18em; color: #ffffff; line-height: 1;">IAGUS</p>
             <h1 class="text-3xl md:text-5xl font-semibold mb-6 leading-snug text-primary-100" style="font-family: 'Inter', sans-serif;">
                 Uma família para pertencer
             </h1>
