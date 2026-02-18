@@ -13,8 +13,6 @@ if errorlevel 1 (
     echo Erro ao executar. Pressione qualquer tecla para sair.
     pause >nul
 )
-
-REM Verificar e matar processos na porta 3001 (Laravel)
 echo 📡 Verificando porta 3001...
 for /f "tokens=5" %%a in ('netstat -ano ^| findstr :3001') do (
     echo Encerrando processo %%a...

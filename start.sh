@@ -93,7 +93,11 @@ if [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "win32" ]]; then
         
         COMMON_PATHS=(
             # Laravel Herd (PRIORIDADE - instalação mais comum)
+            "/c/Users/$USERNAME/.config/herd/bin/php84/php.exe"
+            "/c/Users/$USERNAME/.config/herd/bin/php83/php.exe"
+            "/c/Users/$USERNAME/.config/herd/bin/php82/php.exe"
             "/c/Users/$USERNAME/.config/herd/bin/php.exe"
+            "/c/Users/$USERNAME/AppData/Local/Herd/bin/php84/php.exe"
             "/c/Users/$USERNAME/AppData/Local/Herd/bin/php.exe"
             # Laragon
             "/c/laragon/bin/php/php-8.4.0/php.exe"

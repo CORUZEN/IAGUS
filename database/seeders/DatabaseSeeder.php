@@ -11,24 +11,28 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // Criar usuário admin
-        User::create([
-            'name' => 'Administrador IAGUS',
-            'email' => 'admin@iagus.org.br',
-            'phone' => '87999999999',
-            'password' => Hash::make('iagus2026'),
-            'role' => 'admin',
-            'email_verified_at' => now(),
-        ]);
+        User::firstOrCreate(
+            ['email' => 'admin@iagus.org.br'],
+            [
+                'name' => 'Administrador IAGUS',
+                'phone' => '87999999999',
+                'password' => Hash::make('iagus2026'),
+                'role' => 'admin',
+                'email_verified_at' => now(),
+            ]
+        );
 
         // Criar usuário de teste
-        User::create([
-            'name' => 'João Silva',
-            'email' => 'joao@example.com',
-            'phone' => '87988888888',
-            'password' => Hash::make('password'),
-            'role' => 'user',
-            'email_verified_at' => now(),
-        ]);
+        User::firstOrCreate(
+            ['email' => 'joao@example.com'],
+            [
+                'name' => 'João Silva',
+                'phone' => '87988888888',
+                'password' => Hash::make('password'),
+                'role' => 'user',
+                'email_verified_at' => now(),
+            ]
+        );
 
         // Chamar seeder de eventos
         $this->call([

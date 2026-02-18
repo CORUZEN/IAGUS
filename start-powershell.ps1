@@ -74,8 +74,31 @@ if (!(Test-Path "database\database.sqlite")) {
     Write-Host ""
 }
 
+# Verificar e instalar dependências composer se necessário
+if (!(Test-Path "vendor\nunomaduro\collision")) {
+    Write-Host "Instalando dependencias (composer install)..." -ForegroundColor Yellow
+    $composerPaths = @(
+        "C:\Users\$env:USERNAME\.config\herd\bin\composer.bat",
+        "composer"
+    )
+    $composerCmd = $null
+    foreach ($cp in $composerPaths) {
+        if (Get-Command $cp -ErrorAction SilentlyContinue) { $composerCmd = $cp; break }
+        if (Test-Path $cp) { $composerCmd = $cp; break }
+    }
+    if ($composerCmd) {
+        & $composerCmd install --working-dir="$PSScriptRoot" 2>$null
+        Write-Host "Dependencias instaladas!" -ForegroundColor Green
+    } else {
+        Write-Host "Composer nao encontrado - pulando instalacao" -ForegroundColor Red
+    }
+    Write-Host ""
+}
+
 # Limpar cache
 Write-Host "Limpando cache..." -ForegroundColor Yellow
+# Garantir que o diretório de cache existe
+New-Item -ItemType Directory -Force -Path "$PSScriptRoot\storage\framework\cache\data" | Out-Null
 & $phpCmd artisan cache:clear 2>$null
 & $phpCmd artisan config:clear 2>$null
 & $phpCmd artisan route:clear 2>$null
@@ -85,7 +108,8 @@ Write-Host ""
 
 # Executar migrations
 Write-Host "Configurando banco de dados..." -ForegroundColor Yellow
-& $phpCmd artisan migrate --seed --force 2>$null
+& $phpCmd artisan migrate --force
+& $phpCmd artisan db:seed --force 2>&1 | Where-Object { $_ -notmatch 'UniqueConstraint' }
 if ($LASTEXITCODE -eq 0) {
     Write-Host "Banco configurado!" -ForegroundColor Green
 } else {
