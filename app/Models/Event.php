@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class Event extends Model
@@ -57,6 +59,18 @@ class Event extends Model
     public function scopeUpcoming($query)
     {
         return $query->where('start_at', '>', now());
+    }
+
+    // Accessors
+    protected function coverUrl(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                if (!$this->image_url) return null;
+                if (str_starts_with($this->image_url, 'http')) return $this->image_url;
+                return Storage::url($this->image_url);
+            }
+        );
     }
 
     // Helpers

@@ -20,7 +20,7 @@
 <section class="py-12">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <form action="{{ route('admin.eventos.store') }}" method="POST" class="space-y-6">
+        <form action="{{ route('admin.eventos.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
             @csrf
             
             <!-- Informações Básicas -->
@@ -96,19 +96,36 @@
                         >{{ old('instructions') }}</textarea>
                     </div>
                     
-                    <!-- URL da Imagem -->
+                    <!-- Imagem do Evento -->
                     <div>
-                        <label for="image_url" class="block text-sm font-medium text-gray-700 mb-2">
-                            URL da Imagem
+                        <label for="image" class="block text-sm font-medium text-gray-700 mb-2">
+                            Imagem do Evento
+                            <span class="text-gray-500 text-xs">(JPEG, PNG, WebP – máx. 5 MB)</span>
                         </label>
-                        <input 
-                            type="url" 
-                            id="image_url" 
-                            name="image_url" 
-                            value="{{ old('image_url') }}"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                            placeholder="https://exemplo.com/imagem-evento.jpg"
-                        >
+
+                        <!-- Drop zone -->
+                        <div id="drop-zone"
+                             class="relative flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-primary-400 transition-colors bg-gray-50 hover:bg-primary-50/30"
+                             onclick="document.getElementById('image').click()">
+                            <div id="drop-placeholder" class="flex flex-col items-center gap-2 text-gray-400">
+                                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4-4m0 0l4-4m-4 4h12M4 12V6a2 2 0 012-2h12a2 2 0 012 2v6"/>
+                                    <rect x="2" y="14" width="20" height="6" rx="2"/>
+                                </svg>
+                                <span class="text-sm font-medium">Clique ou arraste uma imagem aqui</span>
+                                <span class="text-xs">JPEG · PNG · WebP · GIF</span>
+                            </div>
+                            <img id="image-preview" src="" alt="Preview" class="hidden absolute inset-0 w-full h-full object-cover rounded-lg">
+                        </div>
+
+                        <input type="file" id="image" name="image"
+                               accept="image/jpeg,image/png,image/gif,image/webp"
+                               class="hidden"
+                               onchange="previewImage(this)">
+
+                        @error('image')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
             </div>
@@ -302,5 +319,39 @@
         
     </div>
 </section>
+
+@push('scripts')
+<script>
+function previewImage(input) {
+    const file = input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+        const preview = document.getElementById('image-preview');
+        const placeholder = document.getElementById('drop-placeholder');
+        preview.src = e.target.result;
+        preview.classList.remove('hidden');
+        placeholder.classList.add('hidden');
+    };
+    reader.readAsDataURL(file);
+}
+
+// Drag & Drop
+const dropZone = document.getElementById('drop-zone');
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('border-primary-500'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('border-primary-500'));
+dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropZone.classList.remove('border-primary-500');
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) {
+        const dt = new DataTransfer();
+        dt.items.add(file);
+        document.getElementById('image').files = dt.files;
+        previewImage(document.getElementById('image'));
+    }
+});
+</script>
+@endpush
 
 @endsection

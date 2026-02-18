@@ -1,6 +1,6 @@
 /.phpunit.cache
 /node_modules
-/public/build
+# public/build NÃO está aqui — assets compilados devem ir para o git (HostGator)
 /public/hot
 /public/storage
 /storage/*.key

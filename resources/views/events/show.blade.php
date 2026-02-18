@@ -10,8 +10,8 @@
             ← Voltar para eventos
         </a>
         
-        @if($event->image_url)
-            <img src="{{ $event->image_url }}" alt="{{ $event->title }}" class="w-full h-64 object-cover rounded-lg mb-6">
+        @if($event->cover_url)
+            <img src="{{ $event->cover_url }}" alt="{{ $event->title }}" class="w-full h-64 object-cover rounded-lg mb-6">
         @endif
         
         <h1 class="text-4xl font-bold mb-4">{{ $event->title }}</h1>

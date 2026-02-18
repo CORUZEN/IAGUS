@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\Payment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class EventController extends Controller
@@ -42,16 +43,21 @@ class EventController extends Controller
             'registration_open_at' => 'nullable|date',
             'registration_close_at' => 'nullable|date',
             'status' => 'required|in:draft,published,closed',
-            'image_url' => 'nullable|url',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
         ]);
 
         if (empty($validated['slug'])) {
             $validated['slug'] = Str::slug($validated['title']);
         }
 
+        if ($request->hasFile('image')) {
+            $validated['image_url'] = $request->file('image')->store('events', 'public');
+        }
+        unset($validated['image']);
+
         $event = Event::create($validated);
 
-        return redirect()->route('admin.events.show', $event)
+        return redirect()->route('admin.eventos.show', $event)
             ->with('success', 'Evento criado com sucesso!');
     }
 
@@ -97,12 +103,26 @@ class EventController extends Controller
             'registration_open_at' => 'nullable|date',
             'registration_close_at' => 'nullable|date',
             'status' => 'required|in:draft,published,closed',
-            'image_url' => 'nullable|url',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'remove_image' => 'nullable|boolean',
         ]);
+
+        if ($request->hasFile('image')) {
+            if ($event->image_url && !str_starts_with($event->image_url, 'http')) {
+                Storage::disk('public')->delete($event->image_url);
+            }
+            $validated['image_url'] = $request->file('image')->store('events', 'public');
+        } elseif ($request->boolean('remove_image')) {
+            if ($event->image_url && !str_starts_with($event->image_url, 'http')) {
+                Storage::disk('public')->delete($event->image_url);
+            }
+            $validated['image_url'] = null;
+        }
+        unset($validated['image'], $validated['remove_image']);
 
         $event->update($validated);
 
-        return redirect()->route('admin.events.show', $event)
+        return redirect()->route('admin.eventos.show', $event)
             ->with('success', 'Evento atualizado com sucesso!');
     }
 
@@ -112,9 +132,13 @@ class EventController extends Controller
             return back()->with('error', 'Não é possível excluir um evento com inscrições.');
         }
 
+        if ($event->image_url && !str_starts_with($event->image_url, 'http')) {
+            Storage::disk('public')->delete($event->image_url);
+        }
+
         $event->delete();
 
-        return redirect()->route('admin.events.index')
+        return redirect()->route('admin.eventos.index')
             ->with('success', 'Evento excluído com sucesso!');
     }
 

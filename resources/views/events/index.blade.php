@@ -18,8 +18,8 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 @foreach($events as $event)
                     <div class="card hover:shadow-xl transition">
-                        @if($event->image_url)
-                            <img src="{{ $event->image_url }}" alt="{{ $event->title }}" class="w-full h-48 object-cover rounded-lg mb-4">
+                        @if($event->cover_url)
+                            <img src="{{ $event->cover_url }}" alt="{{ $event->title }}" class="w-full h-48 object-cover rounded-lg mb-4">
                         @endif
                         
                         <div class="flex items-center gap-2 text-sm text-gray-500 mb-2">

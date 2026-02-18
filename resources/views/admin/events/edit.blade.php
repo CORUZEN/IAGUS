@@ -20,7 +20,7 @@
 <section class="py-12">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <form action="{{ route('admin.eventos.update', $event) }}" method="POST" class="space-y-6">
+        <form action="{{ route('admin.eventos.update', $event) }}" method="POST" enctype="multipart/form-data" class="space-y-6">
             @csrf
             @method('PUT')
             
@@ -97,24 +97,54 @@
                         >{{ old('instructions', $event->instructions) }}</textarea>
                     </div>
                     
-                    <!-- URL da Imagem -->
+                    <!-- Imagem do Evento -->
                     <div>
-                        <label for="image_url" class="block text-sm font-medium text-gray-700 mb-2">
-                            URL da Imagem
+                        <label for="image" class="block text-sm font-medium text-gray-700 mb-2">
+                            Imagem do Evento
+                            <span class="text-gray-500 text-xs">(JPEG, PNG, WebP – máx. 5 MB)</span>
                         </label>
-                        <input 
-                            type="url" 
-                            id="image_url" 
-                            name="image_url" 
-                            value="{{ old('image_url', $event->image_url) }}"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                            placeholder="https://exemplo.com/imagem-evento.jpg"
-                        >
-                        @if($event->image_url)
-                        <div class="mt-2">
-                            <img src="{{ $event->image_url }}" alt="{{ $event->title }}" class="rounded-lg max-h-48">
-                        </div>
+
+                        @if($event->cover_url && !old('remove_image'))
+                            <!-- Imagem atual -->
+                            <div id="current-image-wrap" class="mb-3">
+                                <img src="{{ $event->cover_url }}" alt="{{ $event->title }}"
+                                     id="current-img"
+                                     class="rounded-lg max-h-48 w-full object-cover">
+                                <label class="inline-flex items-center gap-2 mt-2 text-sm text-red-600 cursor-pointer">
+                                    <input type="checkbox" name="remove_image" value="1"
+                                           onchange="toggleRemoveImage(this)">
+                                    Remover imagem atual
+                                </label>
+                            </div>
                         @endif
+
+                        <!-- Drop zone -->
+                        <div id="drop-zone"
+                             class="relative flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-primary-400 transition-colors bg-gray-50 hover:bg-primary-50/30 {{ $event->cover_url ? 'hidden' : '' }}"
+                             onclick="document.getElementById('image').click()">
+                            <div id="drop-placeholder" class="flex flex-col items-center gap-2 text-gray-400">
+                                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4-4m0 0l4-4m-4 4h12M4 12V6a2 2 0 012-2h12a2 2 0 012 2v6"/>
+                                    <rect x="2" y="14" width="20" height="6" rx="2"/>
+                                </svg>
+                                <span class="text-sm font-medium">Clique ou arraste uma imagem aqui</span>
+                                <span class="text-xs">JPEG · PNG · WebP · GIF</span>
+                            </div>
+                            <img id="image-preview" src="" alt="Preview" class="hidden absolute inset-0 w-full h-full object-cover rounded-lg">
+                        </div>
+
+                        <input type="file" id="image" name="image"
+                               accept="image/jpeg,image/png,image/gif,image/webp"
+                               class="hidden"
+                               onchange="previewImage(this)">
+
+                        @if($event->cover_url)
+                            <p class="text-xs text-gray-500 mt-1">Selecione um novo arquivo para substituir a imagem atual.</p>
+                        @endif
+
+                        @error('image')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
             </div>
@@ -316,5 +346,55 @@
         
     </div>
 </section>
+
+@push('scripts')
+<script>
+function previewImage(input) {
+    const file = input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+        const preview = document.getElementById('image-preview');
+        const placeholder = document.getElementById('drop-placeholder');
+        const dropZone = document.getElementById('drop-zone');
+        preview.src = e.target.result;
+        preview.classList.remove('hidden');
+        placeholder.classList.add('hidden');
+        dropZone.classList.remove('hidden');
+    };
+    reader.readAsDataURL(file);
+}
+
+function toggleRemoveImage(checkbox) {
+    const currentWrap = document.getElementById('current-image-wrap');
+    const dropZone = document.getElementById('drop-zone');
+    if (checkbox.checked) {
+        if (currentWrap) currentWrap.style.opacity = '0.4';
+        dropZone.classList.remove('hidden');
+    } else {
+        if (currentWrap) currentWrap.style.opacity = '1';
+        dropZone.classList.add('hidden');
+    }
+}
+
+// Drag & Drop
+const dropZone = document.getElementById('drop-zone');
+if (dropZone) {
+    dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('border-primary-500'); });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('border-primary-500'));
+    dropZone.addEventListener('drop', e => {
+        e.preventDefault();
+        dropZone.classList.remove('border-primary-500');
+        const file = e.dataTransfer.files[0];
+        if (file && file.type.startsWith('image/')) {
+            const dt = new DataTransfer();
+            dt.items.add(file);
+            document.getElementById('image').files = dt.files;
+            previewImage(document.getElementById('image'));
+        }
+    });
+}
+</script>
+@endpush
 
 @endsection
