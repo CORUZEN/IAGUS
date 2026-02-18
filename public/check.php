@@ -21,11 +21,23 @@ echo "<style>pre{background:#1f2937;color:#f3f4f6;padding:15px;border-radius:8px
 
 echo "<h1>Diagnóstico IAGUS - " . date('d/m/Y H:i:s') . "</h1>";
 
-// PHP Info
-echo "<h2>PHP</h2><table>";
-echo "<tr><td>Versão PHP</td><td>" . PHP_VERSION . "</td></tr>";
-echo "<tr><td>Servidor</td><td>" . ($_SERVER['SERVER_SOFTWARE'] ?? 'N/A') . "</td></tr>";
-echo "<tr><td>IP do cliente</td><td>{$ip}</td></tr>";
+// Composer e PHP
+echo "<h2>PHP e Composer</h2><table>";
+echo "<tr><td>PHP versão</td><td>" . PHP_VERSION . "</td></tr>";
+$phpPaths = ['/usr/local/bin/php', '/usr/bin/php', '/opt/cpanel/ea-php84/root/usr/bin/php', '/opt/cpanel/ea-php83/root/usr/bin/php'];
+foreach ($phpPaths as $p) {
+    if (file_exists($p)) echo "<tr><td>PHP bin</td><td style='color:green'>{$p} ✅</td></tr>";
+}
+$composerPaths = ['/usr/local/bin/composer', '/usr/bin/composer', '/opt/cpanel/composer/bin/composer', $basePath.'/composer.phar'];
+foreach ($composerPaths as $p) {
+    $exists = file_exists($p);
+    echo "<tr><td>Composer: {$p}</td><td style='color:" . ($exists?'green':'red') . "'>" . ($exists?'✅ encontrado':'❌ não existe') . "</td></tr>";
+}
+// Testar exec
+$composerOutput = @shell_exec('which composer 2>&1');
+echo "<tr><td>which composer</td><td>" . htmlspecialchars($composerOutput ?: '(vazio)') . "</td></tr>";
+$phpOutput = @shell_exec('which php 2>&1');
+echo "<tr><td>which php</td><td>" . htmlspecialchars($phpOutput ?: '(vazio)') . "</td></tr>";
 echo "</table>";
 
 // Arquivos críticos
