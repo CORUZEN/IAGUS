@@ -8,19 +8,49 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: 🚚 Checkout code
-      uses: actions/checkout@v3
-      
-    - name: 📂 Deploy via SFTP
+      uses: actions/checkout@v4
+
+    - name: 📦 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+
+    - name: 🔨 Instalar dependências e compilar assets
+      run: |
+        npm ci
+        npm run build
+
+    - name: 📂 Deploy via SFTP (porta 2222 - HostGator)
       uses: wlixcc/SFTP-Deploy-Action@v1.2.4
       with:
         username: ${{ secrets.FTP_USERNAME }}
         server: ${{ secrets.FTP_SERVER }}
         password: ${{ secrets.FTP_PASSWORD }}
-        port: 22
+        port: 2222
         local_path: './*'
-        remote_path: '/iagus.com.br'
+        remote_path: ${{ secrets.REMOTE_PATH }}
         sftp_only: true
-        args: '-o ConnectTimeout=5'
+        delete_remote_files: false
+        args: '-o ConnectTimeout=30 -o StrictHostKeyChecking=no'
+        sftpargs: '--exclude=.git --exclude=node_modules --exclude=.env --exclude=storage/logs --exclude=storage/framework/cache --exclude=storage/framework/sessions --exclude=storage/framework/views'
+
+    - name: 🚀 Pós-deploy via SSH (composer, migrate, optimize)
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        port: 2222
+        script: |
+          cd ${{ secrets.REMOTE_PATH }}
+          /usr/local/bin/php /usr/local/bin/composer install --no-dev --optimize-autoloader --no-interaction
+          /usr/local/bin/php artisan migrate --force
+          /usr/local/bin/php artisan optimize:clear
+          /usr/local/bin/php artisan optimize
+          /usr/local/bin/php artisan storage:link --relative 2>/dev/null || true
+          chmod -R 775 storage bootstrap/cache
+          echo "✅ Deploy concluído!"
