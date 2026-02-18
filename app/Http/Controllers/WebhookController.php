@@ -12,12 +12,6 @@ use MercadoPago\MercadoPagoConfig;
 
 class WebhookController extends Controller
 {
-    public function __construct()
-    {
-        // Desabilitar CSRF para webhooks (usar validação de assinatura)
-        $this->middleware('throttle:60,1'); // Rate limiting
-    }
-
     public function mercadopago(Request $request)
     {
         // Registrar webhook recebido

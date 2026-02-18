@@ -87,6 +87,7 @@ Route::middleware('auth')->prefix('pagamento')->name('payment.')->group(function
 
 Route::post('/webhooks/mercadopago', [WebhookController::class, 'mercadopago'])
     ->name('webhooks.mercadopago')
+    ->middleware('throttle:60,1')
     ->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
 
 /*

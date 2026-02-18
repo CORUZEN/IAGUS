@@ -11,11 +11,6 @@ use Illuminate\Support\Str;
 
 class EventController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth', 'admin']);
-    }
-
     public function index()
     {
         $events = Event::orderBy('start_at', 'desc')->paginate(15);
