@@ -29,6 +29,7 @@ jobs:
       run: |
         npm ci
         npm run build
+        composer install --no-dev --optimize-autoloader --no-interaction
 
     - name: 📂 Deploy via SFTP com lftp (porta 2222)
       env:
