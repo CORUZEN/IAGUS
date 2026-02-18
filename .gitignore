@@ -12,6 +12,8 @@
 .env
 .env.backup
 .env.production
+.env-HOSTGATOR
+.env-production
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
