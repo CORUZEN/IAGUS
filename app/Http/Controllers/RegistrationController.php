@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Models\Registration;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -22,7 +23,7 @@ class RegistrationController extends Controller
             return back()->with('error', 'Este evento está lotado.');
         }
 
-        if (auth()->user()->hasRegisteredFor($event->id)) {
+        if (Auth::user()->hasRegisteredFor($event->id)) {
             return back()->with('error', 'Você já está inscrito neste evento.');
         }
 
@@ -31,7 +32,7 @@ class RegistrationController extends Controller
 
             // Criar inscrição
             $registration = Registration::create([
-                'user_id' => auth()->id(),
+                'user_id' => Auth::id(),
                 'event_id' => $event->id,
                 'status' => $event->isFree() ? 'registered' : 'pending_payment',
             ]);
@@ -56,7 +57,7 @@ class RegistrationController extends Controller
             
             Log::error('Erro ao criar inscrição', [
                 'event_id' => $event->id,
-                'user_id' => auth()->id(),
+                'user_id' => Auth::id(),
                 'error' => $e->getMessage()
             ]);
 

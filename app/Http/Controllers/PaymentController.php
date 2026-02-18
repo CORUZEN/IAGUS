@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Payment;
 use App\Models\Registration;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use MercadoPago\Client\Preference\PreferenceClient;
 use MercadoPago\MercadoPagoConfig;
@@ -24,7 +25,7 @@ class PaymentController extends Controller
             ->firstOrFail();
 
         // Verificar se a inscrição pertence ao usuário logado
-        if ($registration->user_id !== auth()->id()) {
+        if ($registration->user_id !== Auth::id()) {
             abort(403, 'Você não tem permissão para acessar esta inscrição.');
         }
 

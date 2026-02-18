@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Registration;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserDashboardController extends Controller
 {
 
     public function index()
     {
-        $registrations = auth()->user()->registrations()
+        $registrations = Auth::user()->registrations()
             ->with('event')
             ->orderBy('created_at', 'desc')
             ->get();
@@ -20,7 +21,7 @@ class UserDashboardController extends Controller
 
     public function registrations()
     {
-        $registrations = auth()->user()->registrations()
+        $registrations = Auth::user()->registrations()
             ->with('event', 'payment')
             ->orderBy('created_at', 'desc')
             ->paginate(10);
@@ -35,7 +36,7 @@ class UserDashboardController extends Controller
             ->firstOrFail();
 
         // Verificar se a inscrição pertence ao usuário logado
-        if ($registration->user_id !== auth()->id()) {
+        if ($registration->user_id !== Auth::id()) {
             abort(403, 'Você não tem permissão para acessar esta inscrição.');
         }
 
