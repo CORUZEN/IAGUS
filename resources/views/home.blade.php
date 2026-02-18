@@ -30,9 +30,9 @@
     
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col justify-center h-full">
         <div class="animate-fade-in">
-            <p class="text-lg md:text-xl mb-4 text-primary-100 tracking-wider uppercase">Bem-vindo à</p>
-            <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-                Uma família para<br><span class="text-primary-200">pertencer</span>
+            <p class="mb-5" style="font-family: 'Playfair Display', Georgia, serif; font-size: clamp(2.8rem, 8vw, 5.5rem); font-weight: 700; letter-spacing: 0.08em; color: white; line-height: 1;">IAGUS</p>
+            <h1 class="text-3xl md:text-5xl font-semibold mb-6 leading-snug text-primary-100" style="font-family: 'Inter', sans-serif;">
+                Uma família para pertencer
             </h1>
             <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto text-primary-100">
                 Conheça a IAGUS e participe dos nossos cultos e eventos em Garanhuns.

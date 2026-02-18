@@ -24,10 +24,19 @@
             <!-- Contato -->
             <div>
                 <h4 class="font-semibold mb-4">Contato</h4>
-                <ul class="space-y-2 text-gray-400 text-sm">
-                    <li>📍 {{ config('app.site_address', 'Garanhuns - PE') }}</li>
-                    <li>📧 {{ config('app.site_email', 'contato@iagus.org.br') }}</li>
-                    <li>📱 {{ config('app.site_whatsapp', '(87) 9 9999-9999') }}</li>
+                <ul class="space-y-3 text-gray-400 text-sm">
+                    <li class="flex items-center gap-2">
+                        <svg class="w-4 h-4 flex-shrink-0 text-gray-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21c-4.418 0-8-4.477-8-8A8 8 0 0 1 12 5a8 8 0 0 1 8 8c0 3.523-3.582 8-8 8z"/><circle cx="12" cy="13" r="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        {{ config('app.site_address', 'Garanhuns - PE') }}
+                    </li>
+                    <li class="flex items-center gap-2">
+                        <svg class="w-4 h-4 flex-shrink-0 text-gray-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25H4.5a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5H4.5A2.25 2.25 0 0 0 2.25 6.75m19.5 0-9.75 6.75L2.25 6.75"/></svg>
+                        {{ config('app.site_email', 'contato@iagus.org.br') }}
+                    </li>
+                    <li class="flex items-center gap-2">
+                        <svg class="w-4 h-4 flex-shrink-0 text-gray-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.338c0-.966.784-1.75 1.75-1.75h2.664c.337 0 .635.19.775.49l1.388 2.982a.875.875 0 0 1-.2.98l-1.077 1.077a13.47 13.47 0 0 0 5.283 5.283l1.077-1.077a.875.875 0 0 1 .98-.2l2.982 1.388c.3.14.49.438.49.775v2.664A1.75 1.75 0 0 1 17.662 21.75C9.18 21.75 2.25 14.82 2.25 6.338z"/></svg>
+                        {{ config('app.site_whatsapp', '(87) 9 9999-9999') }}
+                    </li>
                 </ul>
                 <div class="flex space-x-4 mt-4">
                     <a href="#" class="text-gray-400 hover:text-white transition">
