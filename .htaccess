@@ -1,9 +1,9 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    # Redireciona todo o tráfego para a pasta public/
-    RewriteCond %{REQUEST_URI} !^/public/
-    RewriteRule ^(.*)$ public/$1 [L]
+    # Redireciona para public/ evitando loop
+    RewriteRule ^$ public/index.php [L]
+    RewriteRule ^((?!public/).*)$ public/$1 [L,QSA]
 </IfModule>
 
 # Bloquear acesso a arquivos sensíveis na raiz
@@ -11,4 +11,3 @@
     Order allow,deny
     Deny from all
 </FilesMatch>
-</Files>
