@@ -3,7 +3,7 @@
         'name' => 'iagus/site',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '0d44098a404fda3f692b2a504db1ed1a0d5fc705',
+        'reference' => 'c3e9de68f2fa570752bb45890485ac07ffc68a24',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -130,7 +130,7 @@
         'iagus/site' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '0d44098a404fda3f692b2a504db1ed1a0d5fc705',
+            'reference' => 'c3e9de68f2fa570752bb45890485ac07ffc68a24',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
