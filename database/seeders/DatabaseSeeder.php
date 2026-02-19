@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace Database\Seeders;
 
@@ -10,26 +10,14 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // Criar usuário admin
-        User::firstOrCreate(
-            ['email' => 'admin@iagus.org.br'],
+        // Criar/atualizar usuário admin padrão
+        User::updateOrCreate(
+            ['role' => 'admin'],
             [
                 'name' => 'Administrador IAGUS',
+                'email' => 'admin@iagus.com.br',
                 'phone' => '87999999999',
-                'password' => Hash::make('iagus2026'),
-                'role' => 'admin',
-                'email_verified_at' => now(),
-            ]
-        );
-
-        // Criar usuário de teste
-        User::firstOrCreate(
-            ['email' => 'joao@example.com'],
-            [
-                'name' => 'João Silva',
-                'phone' => '87988888888',
-                'password' => Hash::make('password'),
-                'role' => 'user',
+                'password' => Hash::make('Iagus@26'),
                 'email_verified_at' => now(),
             ]
         );

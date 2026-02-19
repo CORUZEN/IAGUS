@@ -18,26 +18,30 @@
 <body class="@yield('body_class', 'min-h-screen') flex flex-col">
     
     @include('layouts.navbar')
+
+    @if(session('success') || session('error') || session('info'))
+        <div class="toast-container" aria-live="polite" aria-atomic="true">
+            @if(session('success'))
+                <div class="alert alert-success toast">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div class="alert alert-error toast">
+                    {{ session('error') }}
+                </div>
+            @endif
+
+            @if(session('info'))
+                <div class="alert alert-info toast">
+                    {{ session('info') }}
+                </div>
+            @endif
+        </div>
+    @endif
     
     <main class="flex-grow flex flex-col @yield('main_class', '')">
-        @if(session('success'))
-            <div class="alert alert-success max-w-7xl mx-auto mt-4 px-4">
-                {{ session('success') }}
-            </div>
-        @endif
-        
-        @if(session('error'))
-            <div class="alert alert-error max-w-7xl mx-auto mt-4 px-4">
-                {{ session('error') }}
-            </div>
-        @endif
-        
-        @if(session('info'))
-            <div class="alert alert-info max-w-7xl mx-auto mt-4 px-4">
-                {{ session('info') }}
-            </div>
-        @endif
-        
         @yield('content')
     </main>
     
